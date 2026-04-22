@@ -161,14 +161,14 @@ const FoodItemsPage = () => {
                 {item.image ? (
                   <>
                     <img
-                      src={`http://localhost:5000${item.image}`}
+                      src={`https://eatexpress-backend-ft4m.onrender.com${item.image}`}
                       alt={item.name}
                       className="w-full h-48 object-cover"
                       onError={(e) => {
                         console.error("Image failed to load:", item.image);
                         console.error(
                           "Full URL attempted:",
-                          `http://localhost:5000${item.image}`
+                          `https://eatexpress-backend-ft4m.onrender.com${item.image}`
                         );
                         e.target.style.display = "none";
                         e.target.nextSibling.style.display = "flex";
@@ -176,7 +176,7 @@ const FoodItemsPage = () => {
                       onLoad={() => {
                         console.log(
                           "Image loaded successfully:",
-                          `http://localhost:5000${item.image}`
+                          `https://eatexpress-backend-ft4m.onrender.com${item.image}`
                         );
                       }}
                     />

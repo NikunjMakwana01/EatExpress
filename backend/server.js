@@ -40,14 +40,14 @@ app.use("/api", (req, res, next) => {
 // CORS
 app.use(
   cors({
-    origin: "*",
-    // process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
     credentials: true,
   })
 );
 
 // Static file serving for uploads (before security middleware)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 // Security middleware (after static files)
 app.use(helmet({
@@ -57,7 +57,7 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "http://localhost:5000", "http://localhost:5173"],
+      imgSrc: ["'self'", "data:", "https://eatexpress-backend-ft4m.onrender.com/uploads", "https://eat-express-beta.vercel.app/"],
     },
   },
 }));

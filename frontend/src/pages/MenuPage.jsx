@@ -231,7 +231,7 @@ const MenuPage = () => {
                     {foodItem.image ? (
                       <>
                         <img
-                          src={`http://localhost:5000${foodItem.image}`}
+                          src={`https://eatexpress-backend-ft4m.onrender.com${foodItem.image}`}
                           alt={foodItem.name}
                           className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-300"
                           onError={(e) => {

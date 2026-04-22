@@ -223,7 +223,7 @@ const AddFoodItemPage = () => {
                   {imagePreview ? (
                     <div className="relative">
                       <img
-                        src={`http://localhost:5000${imagePreview}`}
+                        src={`https://eatexpress-backend-ft4m.onrender.com${imagePreview}`}
                         alt="Preview"
                         className="w-full h-64 object-cover rounded-lg"
                         onError={(e) => {

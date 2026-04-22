@@ -218,7 +218,7 @@ const OrderStatusPage = () => {
                   <div className="flex-shrink-0">
                     {item.foodItem.image ? (
                       <img
-                        src={`http://localhost:5000${item.foodItem.image}`}
+                        src={`https://eatexpress-backend-ft4m.onrender.com${item.foodItem.image}`}
                         alt={item.foodItem.name}
                         className="w-16 h-16 rounded-lg object-cover"
                       />

@@ -111,7 +111,7 @@ const CartPage = () => {
                          {item.image ? (
                            <>
                              <img
-                               src={`http://localhost:5000${item.image}`}
+                               src={`https://eatexpress-backend-ft4m.onrender.com${item.image}`}
                                alt={item.name}
                                className="w-24 h-24 rounded-2xl object-cover shadow-md"
                                onError={(e) => {
