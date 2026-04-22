@@ -39,10 +39,7 @@ app.use("/api", (req, res, next) => {
 
 // CORS
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "https://eat-express-beta.vercel.app/",
-    credentials: true,
-  })
+  cors({})
 );
 
 // Static file serving for uploads (before security middleware)
