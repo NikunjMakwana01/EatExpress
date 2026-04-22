@@ -156,7 +156,7 @@ const AboutPage = () => {
               </div>
             </div>
             <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-              <div className="text-gray-400 text-6xl"><img src="./ourmission.avif" alt="Our Mission" /></div>
+              <div className="text-gray-400 text-6xl"><img src="./public/ourmission.avif" alt="Our Mission" /></div>
             </div>
           </div>
         </div>
@@ -232,7 +232,7 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-              <div className="text-gray-400 text-6xl"><img src="./ourstory.avif" alt="Our Story" /></div>
+              <div className="text-gray-400 text-6xl"><img src="./public/ourstory.avif" alt="Our Story" /></div>
             </div>
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
