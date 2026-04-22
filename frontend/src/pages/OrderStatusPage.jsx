@@ -31,6 +31,7 @@ const OrderStatusPage = () => {
   useEffect(() => {
     fetchOrder();
   }, [orderId]);
+  
   const getStatusIcon = (status) => {
     switch (status) {
       case "pending":
@@ -186,15 +187,6 @@ const OrderStatusPage = () => {
                   <p>{order.deliveryAddress.country}</p>
                 </div>
               </div>
-              {/* <div>
-                <h4 className="font-semibold text-gray-900 mb-3">
-                  Contact Info
-                </h4>
-                <div className="text-gray-600">
-                  <p>{order?.contactInfo?.phone || "N/A"}</p>
-                  <p>{order?.contactInfo?.email || "N/A"}</p>
-                </div>
-              </div> */}
             </div>
 
             {order.specialInstructions && (

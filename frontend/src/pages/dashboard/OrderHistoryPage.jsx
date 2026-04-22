@@ -209,9 +209,9 @@ const OrderHistoryPage = () => {
                       className="flex justify-between items-center text-sm"
                     >
                       <span className="flex-1">
-                        {item.quantity}x {item.foodItem.name}
+                        {item.quantity}x {item.foodItem?.name}
                       </span>
-                      <span className="text-gray-600">₹{item.price}</span>
+                      <span className="text-gray-600">₹{item.foodItem?.price}</span>
                     </div>
                   ))}
                 </div>
@@ -224,7 +224,7 @@ const OrderHistoryPage = () => {
                     Total Amount:
                   </span>
                   <span className="ml-2 text-gray-900">
-                    ₹{order.totalAmount}
+                    ₹{order.finalAmount}
                   </span>
                 </div>
                 <div>
