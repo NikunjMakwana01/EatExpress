@@ -1,0 +1,505 @@
+Eat Express API Endpoints for Postman Testing
+Base URL: http://localhost:5000
+Common API Prefix: /api
+
+AUTH NOTES
+- For protected routes, add header:
+  Authorization: Bearer <JWT_TOKEN>
+- Content-Type: application/json for JSON body requests.
+- Upload endpoint uses form-data.
+
+================================================================
+1) HEALTH
+================================================================
+[GET] /api/health
+- Auth: No
+- Input: None
+
+================================================================
+2) AUTH
+================================================================
+[POST] /api/auth/register
+- Auth: No
+- Body (JSON):
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "Test@123",
+  "phone": "9876543210"
+}
+
+[POST] /api/auth/login
+- Auth: No
+- Body (JSON):
+{
+  "email": "test@example.com",
+  "password": "Test@123"
+}
+
+[GET] /api/auth/me
+- Auth: Yes
+- Input: None
+
+[PUT] /api/auth/updatedetails
+- Auth: Yes
+- Body (JSON, optional fields):
+{
+  "name": "Updated Name",
+  "email": "updated@example.com",
+  "phone": "9876543210"
+}
+
+[PUT] /api/auth/updatepassword
+- Auth: Yes
+- Body (JSON):
+{
+  "currentPassword": "Test@123",
+  "newPassword": "NewPass@123"
+}
+
+================================================================
+3) USERS
+================================================================
+[GET] /api/users
+- Auth: Yes (Admin)
+- Input: None
+
+[GET] /api/users/:id
+- Auth: Yes
+- Path Params:
+  - id: user ObjectId
+- Input: None
+
+[PUT] /api/users/:id
+- Auth: Yes
+- Path Params:
+  - id: user ObjectId
+- Body (JSON, optional fields):
+{
+  "name": "Updated User",
+  "email": "user@example.com",
+  "phone": "9876543210",
+  "address": {
+    "street": "123 Main St",
+    "city": "Delhi",
+    "state": "DL",
+    "zipCode": "110001"
+  },
+  "preferences": {
+    "isVegetarian": false,
+    "spiceLevel": "medium"
+  }
+}
+
+[DELETE] /api/users/:id
+- Auth: Yes (Admin)
+- Path Params:
+  - id: user ObjectId
+- Input: None
+
+================================================================
+4) CATEGORIES
+================================================================
+[GET] /api/categories
+- Auth: No
+- Input: None
+
+[GET] /api/categories/:id
+- Auth: No
+- Path Params:
+  - id: category ObjectId
+- Input: None
+
+[POST] /api/categories
+- Auth: Yes (Admin)
+- Body (JSON):
+{
+  "name": "Main Course",
+  "description": "Main dishes"
+}
+
+[PUT] /api/categories/:id
+- Auth: Yes (Admin)
+- Path Params:
+  - id: category ObjectId
+- Body (JSON, optional fields):
+{
+  "name": "Starters",
+  "description": "Updated description"
+}
+
+[DELETE] /api/categories/:id
+- Auth: Yes (Admin)
+- Path Params:
+  - id: category ObjectId
+- Input: None
+
+================================================================
+5) FOOD ITEMS
+================================================================
+[GET] /api/food-items
+- Auth: No
+- Query Params (all optional):
+  - category=<categoryId>
+  - search=<text>
+  - minPrice=<number>
+  - maxPrice=<number>
+  - isVegetarian=true|false
+  - isVegan=true|false
+  - isSpicy=true|false
+  - sortBy=name|price|createdAt
+  - sortOrder=asc|desc
+  - page=<number>
+  - limit=<number>
+
+[POST] /api/food-items/upload
+- Auth: Yes (Admin)
+- Body Type: form-data
+- Form Field:
+  - image: <file>
+
+[GET] /api/food-items/:id
+- Auth: No
+- Path Params:
+  - id: food item ObjectId
+- Input: None
+
+[POST] /api/food-items
+- Auth: Yes (Admin)
+- Body (JSON):
+{
+  "name": "Paneer Tikka",
+  "description": "Grilled paneer with spices",
+  "price": 299,
+  "category": "<categoryId>",
+  "image": "/uploads/sample.jpg",
+  "isVegetarian": true,
+  "isVegan": false,
+  "isSpicy": true,
+  "preparationTime": 20,
+  "calories": 350,
+  "allergens": ["dairy"],
+  "ingredients": ["paneer", "spices"],
+  "nutritionalInfo": {
+    "protein": "18g",
+    "carbs": "12g",
+    "fat": "20g"
+  }
+}
+
+[PUT] /api/food-items/:id
+- Auth: Yes (Admin)
+- Path Params:
+  - id: food item ObjectId
+- Body (JSON, any updatable fields):
+{
+  "name": "Updated Name",
+  "description": "Updated description",
+  "price": 320,
+  "image": "/uploads/new.jpg",
+  "isVegetarian": true,
+  "isVegan": false,
+  "isSpicy": false,
+  "preparationTime": 15,
+  "calories": 300,
+  "allergens": ["nuts"],
+  "ingredients": ["ingredient1", "ingredient2"],
+  "nutritionalInfo": {
+    "protein": "15g"
+  },
+  "isAvailable": true
+}
+
+[DELETE] /api/food-items/:id
+- Auth: Yes (Admin)
+- Path Params:
+  - id: food item ObjectId
+- Input: None
+
+================================================================
+6) ORDERS
+================================================================
+[POST] /api/orders
+- Auth: Yes
+- Body (JSON):
+{
+  "items": [
+    {
+      "foodItem": "<foodItemId>",
+      "quantity": 2
+    }
+  ],
+  "deliveryAddress": {
+    "street": "123 Main St",
+    "city": "Delhi",
+    "state": "DL",
+    "zipCode": "110001"
+  },
+  "contactInfo": {
+    "phone": "9876543210",
+    "email": "test@example.com"
+  },
+  "specialInstructions": "Less spicy",
+  "totalAmount": 500,
+  "deliveryFee": 40,
+  "tax": 50,
+  "finalAmount": 590,
+  "paymentMethod": "razorpay"
+}
+
+[GET] /api/orders/my-orders
+- Auth: Yes
+- Query Params (optional):
+  - status=<pending|confirmed|preparing|out_for_delivery|delivered|cancelled>
+  - dateRange=today|week|month|year
+  - search=<text>
+  - page=<number>
+  - limit=<number>
+
+[GET] /api/orders/:id
+- Auth: Yes
+- Path Params:
+  - id: order ObjectId
+- Input: None
+
+[PUT] /api/orders/:id/status
+- Auth: Yes (Admin)
+- Path Params:
+  - id: order ObjectId
+- Body (JSON):
+{
+  "status": "confirmed",
+  "cancellationReason": "Optional reason if cancelled"
+}
+
+[PUT] /api/orders/:id/cancel
+- Auth: Yes
+- Path Params:
+  - id: order ObjectId
+- Body (JSON, optional):
+{
+  "reason": "Customer requested cancellation"
+}
+
+[POST] /api/orders/:id/review
+- Auth: Yes
+- Path Params:
+  - id: order ObjectId
+- Body (JSON):
+{
+  "rating": 5,
+  "review": "Excellent food and delivery"
+}
+
+[GET] /api/orders
+- Auth: Yes (Admin)
+- Query Params (optional):
+  - status=<order_status>
+  - paymentStatus=<pending|completed|failed|refunded>
+  - page=<number>
+  - limit=<number>
+  - sortBy=<field>
+  - sortOrder=asc|desc
+
+[GET] /api/orders/stats
+- Auth: Yes
+- Input: None
+
+================================================================
+7) RESERVATIONS
+================================================================
+[POST] /api/reservations
+- Auth: Yes
+- Body (JSON):
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "phone": "9876543210",
+  "date": "2026-04-20",
+  "time": "19:00",
+  "guests": 4,
+  "tableType": "4-seater",
+  "occasion": "casual",
+  "specialRequests": "Window seat if available"
+}
+
+[GET] /api/reservations/my-reservations
+- Auth: Yes
+- Query Params (optional):
+  - status=<pending|confirmed|cancelled|completed>
+  - date=<YYYY-MM-DD>
+  - page=<number>
+  - limit=<number>
+
+[GET] /api/reservations/:id
+- Auth: Yes
+- Path Params:
+  - id: reservation ObjectId
+- Input: None
+
+[PUT] /api/reservations/:id/status
+- Auth: Yes (Admin)
+- Path Params:
+  - id: reservation ObjectId
+- Body (JSON):
+{
+  "status": "confirmed",
+  "cancellationReason": "Optional reason if cancelled",
+  "notes": "Optional admin notes"
+}
+
+[PUT] /api/reservations/:id/cancel
+- Auth: Yes
+- Path Params:
+  - id: reservation ObjectId
+- Body (JSON, optional):
+{
+  "reason": "Cannot attend"
+}
+
+[GET] /api/reservations/availability
+- Auth: No
+- Query Params (required):
+  - date=<YYYY-MM-DD>
+  - time=<HH:mm>
+  - tableType=<2-seater|4-seater|6-seater|8-seater|private>
+  - guests=<number>
+
+[GET] /api/reservations/available-times
+- Auth: No
+- Query Params (required):
+  - date=<YYYY-MM-DD>
+  - guests=<number>
+
+[GET] /api/reservations
+- Auth: Yes (Admin)
+- Query Params (optional):
+  - status=<pending|confirmed|cancelled|completed>
+  - date=<YYYY-MM-DD>
+  - page=<number>
+  - limit=<number>
+  - sortBy=<field>
+  - sortOrder=asc|desc
+
+[GET] /api/reservations/stats
+- Auth: Yes
+- Input: None
+
+================================================================
+8) PAYMENTS
+================================================================
+[POST] /api/payments/create-order
+- Auth: Yes
+- Body (JSON):
+{
+  "amount": 590,
+  "currency": "INR",
+  "orderId": "<optionalOrderId>",
+  "receipt": "optional_receipt_001"
+}
+
+[POST] /api/payments/create-reservation-payment
+- Auth: Yes
+- Body (JSON):
+{
+  "amount": 200,
+  "reservationId": "<reservationId>",
+  "currency": "INR"
+}
+
+[POST] /api/payments/verify
+- Auth: Yes
+- Body (JSON):
+{
+  "razorpay_order_id": "<razorpay_order_id>",
+  "razorpay_payment_id": "<razorpay_payment_id>",
+  "razorpay_signature": "<razorpay_signature>"
+}
+
+[POST] /api/payments/reservation-deposit-failed
+- Auth: Yes
+- Body (JSON):
+{
+  "reservationId": "<reservationId>",
+  "reason": "Optional reason"
+}
+
+[GET] /api/payments/:paymentId
+- Auth: Yes
+- Path Params:
+  - paymentId: Razorpay payment ID
+- Input: None
+
+[POST] /api/payments/:paymentId/refund
+- Auth: Yes (Admin)
+- Path Params:
+  - paymentId: Razorpay payment ID
+- Body (JSON, optional):
+{
+  "amount": 100,
+  "reason": "requested_by_customer"
+}
+
+[GET] /api/payments/stats
+- Auth: Yes (Admin)
+- Input: None
+
+[POST] /api/payments/webhook
+- Auth: No (Razorpay server-to-server)
+- Body: raw JSON payload from Razorpay
+- Header: x-razorpay-signature
+
+================================================================
+9) CONTACTS
+================================================================
+[POST] /api/contacts
+- Auth: No
+- Body (JSON):
+{
+  "name": "Visitor Name",
+  "email": "visitor@example.com",
+  "subject": "Need help",
+  "message": "Your message here"
+}
+
+[GET] /api/contacts
+- Auth: Yes (Admin)
+- Input: None
+
+[PATCH] /api/contacts/:id
+- Auth: Yes (Admin)
+- Path Params:
+  - id: contact message ObjectId
+- Body (JSON, as needed):
+{
+  "status": "read",
+  "notes": "Handled by support"
+}
+
+[DELETE] /api/contacts/:id
+- Auth: Yes (Admin)
+- Path Params:
+  - id: contact message ObjectId
+- Input: None
+
+================================================================
+10) SETTINGS
+================================================================
+[GET] /api/settings
+- Auth: No
+- Input: None
+
+[PUT] /api/settings
+- Auth: Yes (Admin)
+- Body (JSON):
+{
+  "restaurantName": "Eat Express",
+  "phone": "9876543210",
+  "email": "owner@example.com",
+  "address": "Restaurant address",
+  "socialLinks": {
+    "instagram": "https://instagram.com/example"
+  }
+}
+
+END OF FILE

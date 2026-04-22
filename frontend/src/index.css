@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for better Tailwind integration */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.bg-g{
+  background: url(./assets/lily-banse--YHSwy6uqvk-unsplash.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
