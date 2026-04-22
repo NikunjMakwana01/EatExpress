@@ -41,7 +41,7 @@ const AdminOrdersPage = () => {
       console.error("Error response:", error.response?.data);
       console.error("Error status:", error.response?.status);
       toast.error(
-        error.response?.data?.error || "Failed to update order status"
+        error.response?.data?.error || "Failed to update order status",
       );
     }
   };
@@ -176,7 +176,7 @@ const AdminOrdersPage = () => {
                         {getStatusIcon(order.status)}
                         <span
                           className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-                            order.status
+                            order.status,
                           )}`}
                         >
                           {order.status.charAt(0).toUpperCase() +
@@ -185,7 +185,7 @@ const AdminOrdersPage = () => {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                       <div>
                         <p className="text-sm font-medium text-gray-600">
                           Customer
@@ -198,7 +198,17 @@ const AdminOrdersPage = () => {
                         <p className="text-sm font-medium text-gray-600">
                           Total Amount
                         </p>
-                        <p className="text-gray-900">₹{order.totalAmount}</p>
+                        <p className="text-gray-900">
+                          ₹{order.totalAmount} without Tax (5%)
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">
+                          Total Amount
+                        </p>
+                        <p className="text-gray-900">
+                          ₹{order.finalAmount} with Tax (5%)
+                        </p>
                       </div>
                     </div>
 
