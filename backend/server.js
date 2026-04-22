@@ -57,7 +57,7 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https://eatexpress-backend-ft4m.onrender.com/uploads", "https://eat-express-beta.vercel.app/"],
+      imgSrc: ["'self'", "data:", "https://eatexpress-backend-ft4m.onrender.com", "http://localhost:5173"],
     },
   },
 }));
