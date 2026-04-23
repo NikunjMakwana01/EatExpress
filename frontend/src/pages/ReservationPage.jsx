@@ -78,7 +78,7 @@ const ReservationPage = () => {
       const res = await reservationAPI.createReservation(formData);
       const reservation = res.data.data;
 
-      toast.info("Reservation created. Please pay the 500 deposit to confirm.");
+      toast.info("Reservation created. Please pay the 100 deposit to confirm.");
       navigate(`/reservation/payment/${reservation._id}`);
     } catch (error) {
       console.error(error);
