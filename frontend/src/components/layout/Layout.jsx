@@ -198,15 +198,39 @@ const Layout = ({ children }) => {
                     <ShoppingCart className="w-6 h-6 mr-3" />
                     Cart ({cartItemCount})
                   </Link>
-                  <Link
-                    to="/reservation"
-                    className="flex items-center px-4 py-3 rounded-xl text-lg font-semibold text-gray-600 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Calendar className="w-6 h-6 mr-3" />
-                    Book Table
-                  </Link>
-
+                  <div className="relative group">
+                    <button className="flex items-center text-lg font-semibold text-gray-700 hover:text-orange-600 transition-colors px-4 py-2 rounded-xl hover:bg-orange-50">
+                      <User className="w-5 h-5 mr-2" />
+                      {user.name}
+                    </button>
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100">
+                      <Link
+                        to="/profile"
+                        className="block px-6 py-3 text-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                      >
+                        Profile
+                      </Link>
+                      <Link
+                        to="/orders"
+                        className="block px-6 py-3 text-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                      >
+                        Orders
+                      </Link>
+                      <Link
+                        to="/my-reservations"
+                        className="block px-6 py-3 text-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                      >
+                        Reservations
+                      </Link>
+                      <div className="border-t border-gray-200 my-2"></div>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-6 py-3 text-lg text-red-600 hover:bg-red-50 transition-colors"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
                   <button
                     onClick={handleLogout}
                     className="flex items-center w-full px-4 py-3 rounded-xl text-lg font-semibold text-red-600 hover:bg-red-50 transition-all duration-300"
@@ -330,9 +354,7 @@ const Layout = ({ children }) => {
           <div className="mt-12 pt-8 border-t border-gray-700 text-center">
             <p className="text-gray-400 text-lg">
               &copy; 2026 {restaurantName}. All rights reserved. |
-              <span className="text-orange-400 ml-2">
-                Made for food lovers
-              </span>
+              <span className="text-orange-400 ml-2">Made for food lovers</span>
             </p>
           </div>
         </div>

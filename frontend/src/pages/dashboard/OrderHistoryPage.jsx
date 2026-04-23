@@ -124,7 +124,7 @@ const OrderHistoryPage = () => {
       {/* Filter Tabs */}
       <div className="mb-6">
         <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8">
+          <nav className="mb-px flex space-x-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {[
               { key: "all", label: "All Orders" },
               { key: "pending", label: "Pending" },
