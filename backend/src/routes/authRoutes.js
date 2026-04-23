@@ -6,7 +6,9 @@ const {
   login,
   getMe,
   updateDetails,
-  updatePassword
+  updatePassword,
+  forgotPassword,
+  resetPassword
 } = require('../controllers/authController');
 
 const router = express.Router();
@@ -47,6 +49,43 @@ router.post('/login', [
   }
   
   await login(req, res);
+});
+
+// @desc    Send reset password OTP
+// @route   POST /api/auth/forgot-password
+// @access  Public
+router.post('/forgot-password', [
+  body('email').isEmail().withMessage('Please include a valid email')
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: errors.array()
+    });
+  }
+
+  await forgotPassword(req, res);
+});
+
+// @desc    Reset password with OTP
+// @route   POST /api/auth/reset-password
+// @access  Public
+router.post('/reset-password', [
+  body('email').isEmail().withMessage('Please include a valid email'),
+  body('otp').isLength({ min: 4, max: 4 }).withMessage('OTP must be 4 digits'),
+  body('otp').isNumeric().withMessage('OTP must be numeric'),
+  body('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters')
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: errors.array()
+    });
+  }
+
+  await resetPassword(req, res);
 });
 
 // @desc    Get current logged in user

@@ -11,6 +11,7 @@ import ContactPage from "./pages/ContactPage";
 // Auth Pages
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 
 // Dashboard Pages
 import ProfilePage from "./pages/dashboard/ProfilePage";
@@ -45,6 +46,7 @@ const AppRoutes = () => {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
       {/* Protected Routes */}
       <Route

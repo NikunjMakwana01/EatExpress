@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { sendEmail } = require("../utils/sendEmail");
 
 // @desc    Register user
 // @route   POST /api/auth/register
@@ -218,10 +219,111 @@ const updatePassword = async (req, res) => {
   }
 };
 
+// @desc    Send reset password OTP
+// @route   POST /api/auth/forgot-password
+// @access  Public
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email }).select(
+      "+passwordResetOtp +passwordResetOtpExpire"
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "No user found with this email",
+      });
+    }
+
+    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    user.passwordResetOtp = otp;
+    user.passwordResetOtpExpire = Date.now() + 10 * 60 * 1000;
+    await user.save();
+
+    await sendEmail({
+      to: user.email,
+      subject: "Eat Express Password Reset OTP",
+      text: `Your OTP to reset password is ${otp}. It is valid for 10 minutes.`,
+      html: `<p>Your OTP to reset password is <strong>${otp}</strong>.</p><p>This OTP is valid for 10 minutes.</p>`,
+    });
+
+    res.json({
+      success: true,
+      message: "OTP sent successfully",
+    });
+  } catch (error) {
+    console.error("Forgot password error:", error);
+    res.status(500).json({
+      success: false,
+      error: "Failed to send OTP",
+    });
+  }
+};
+
+// @desc    Verify OTP and reset password
+// @route   POST /api/auth/reset-password
+// @access  Public
+const resetPassword = async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+
+    const user = await User.findOne({ email }).select(
+      "+password +passwordResetOtp +passwordResetOtpExpire"
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "No user found with this email",
+      });
+    }
+
+    if (!user.passwordResetOtp || !user.passwordResetOtpExpire) {
+      return res.status(400).json({
+        success: false,
+        error: "Please request a new OTP",
+      });
+    }
+
+    if (user.passwordResetOtpExpire.getTime() < Date.now()) {
+      return res.status(400).json({
+        success: false,
+        error: "OTP has expired. Please request a new OTP",
+      });
+    }
+
+    if (user.passwordResetOtp !== otp) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid OTP",
+      });
+    }
+
+    user.password = newPassword;
+    user.passwordResetOtp = undefined;
+    user.passwordResetOtpExpire = undefined;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Password reset successfully",
+    });
+  } catch (error) {
+    console.error("Reset password error:", error);
+    res.status(500).json({
+      success: false,
+      error: "Failed to reset password",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
   getMe,
   updateDetails,
   updatePassword,
+  forgotPassword,
+  resetPassword,
 };
