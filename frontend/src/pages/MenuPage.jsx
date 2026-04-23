@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import api from "../services/api";
 import { useCart } from "../contexts/CartContext";
 import { toast } from "react-toastify";
@@ -18,6 +18,7 @@ const MenuPage = () => {
   const [foodItems, setFoodItems] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isFiltering, setIsFiltering] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
@@ -25,10 +26,11 @@ const MenuPage = () => {
     isVegetarian: false,
     isAvailable: true,
   });
+  const didInitialLoad = useRef(false);
 
   useEffect(() => {
     fetchCategories();
-    fetchFoodItems();
+    fetchFoodItems(true);
   }, []);
 
   const fetchCategories = async () => {
@@ -40,9 +42,13 @@ const MenuPage = () => {
     }
   };
 
-  const fetchFoodItems = async () => {
+  const fetchFoodItems = async (showPageLoader = false) => {
     try {
-      setLoading(true);
+      if (showPageLoader) {
+        setLoading(true);
+      } else {
+        setIsFiltering(true);
+      }
       const params = {
         search: searchTerm,
         category: selectedCategory,
@@ -58,12 +64,20 @@ const MenuPage = () => {
       toast.error("Failed to fetch menu items");
       console.error("Fetch food items error:", error);
     } finally {
-      setLoading(false);
+      if (showPageLoader) {
+        setLoading(false);
+      } else {
+        setIsFiltering(false);
+      }
     }
   };
 
   useEffect(() => {
-    fetchFoodItems();
+    if (!didInitialLoad.current) {
+      didInitialLoad.current = true;
+      return;
+    }
+    fetchFoodItems(false);
   }, [searchTerm, selectedCategory, priceRange, filters]);
 
   const handleAddToCart = (foodItem) => {
@@ -197,6 +211,9 @@ const MenuPage = () => {
         </div>
 
         {/* Menu Items */}
+        {isFiltering && (
+          <div className="mb-4 text-sm text-gray-500">Updating menu...</div>
+        )}
         {foodItems.length === 0 ? (
           <div className="text-center py-16">
             <div className="bg-white rounded-2xl shadow-lg p-12 max-w-md mx-auto">
