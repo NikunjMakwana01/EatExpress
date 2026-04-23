@@ -53,7 +53,7 @@ A full-stack restaurant web application that allows users to browse menus, place
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/your-username/eat-express.git
+git clone https://github.com/NikunjMakwana01/EatExpress.git
 cd eat-express
 ```
 
