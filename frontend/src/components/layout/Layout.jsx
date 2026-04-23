@@ -48,7 +48,7 @@ const Layout = ({ children }) => {
       {/* Header */}
       <header className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
         <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex items-center justify-between h-20 gap-4">
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link to="/" className="flex items-center group">
@@ -62,7 +62,7 @@ const Layout = ({ children }) => {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden lg:flex space-x-8">
               {navigation.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -83,7 +83,7 @@ const Layout = ({ children }) => {
             </nav>
 
             {/* Desktop Actions */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-6">
               {user ? (
                 <>
                   <Link
@@ -150,7 +150,7 @@ const Layout = ({ children }) => {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-600 hover:text-orange-600 p-2 rounded-xl hover:bg-orange-50 transition-all duration-300"
@@ -167,7 +167,7 @@ const Layout = ({ children }) => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
+          <div className="lg:hidden bg-white border-t border-gray-200 shadow-lg">
             <div className="px-4 pt-4 pb-6 space-y-2">
               {navigation.map((item) => {
                 const Icon = item.icon;
