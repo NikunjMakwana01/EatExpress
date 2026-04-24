@@ -64,7 +64,7 @@ const reservationSchema = new mongoose.Schema(
     },
     depositAmount: {
       type: Number,
-      default: 500,
+      default: 100,
     },
     depositPaid: {
       type: Boolean,
